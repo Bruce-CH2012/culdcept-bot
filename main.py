@@ -3,9 +3,10 @@ from discord.ext import commands
 from discord import app_commands
 import datetime
 import pytz
+import os
+TOKEN = os.environ.get('DISCORD_TOKEN')
 
 # --- 設定 ---
-TOKEN = 'MTQ5MDYyNDcyNzA1NDgxMTIwNw.GidxLC.UL1iJIlhnqvPCqRFmri-U4UigtK0y7pk8rljdA' # 先ほど取得したトークン
 FORUM_CHANNEL_ID = 1490645851733889147 # フォーラムのID
 
 JST = pytz.timezone('Asia/Tokyo')
