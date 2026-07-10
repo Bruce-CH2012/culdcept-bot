@@ -80,7 +80,7 @@ async def recruit(interaction: discord.Interaction, date: str, hour: str = "21",
             tags = [channel.available_tags[0]] if channel.available_tags else []
             thread = await channel.create_thread(
                 name=f"【募集】{target_dt.strftime('%m/%d %H:%M')}～ ＠{map_name}", 
-                content=f"**募集主: {interaction.user.mention}**\n\n開始日時: <t:{int(target_dt.timestamp())}:F>\nマップ: **{map_name}**\n\n参加希望の方は返信してください！", 
+                content=f"**募集主: {interaction.user.mention}**\n\n開始日時: <t:{int(target_dt.timestamp())}:F>\nマップ: **{map_name}**\n\n参加希望の方はこのスレに書込みしてください！", 
                 applied_tags=tags
             )
             await interaction.followup.send(f"作成完了: {thread.thread.jump_url}", ephemeral=True)
