@@ -4,6 +4,20 @@ from discord import app_commands
 import datetime
 import pytz
 import os
+import threading
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+
+# --- Webサーバーのダミー処理 ---
+def run_dummy_server():
+    # Renderは PORT という環境変数を指定してくるので、それを使う
+    port = int(os.environ.get('PORT', 10000))
+    server = HTTPServer(('0.0.0.0', port), SimpleHTTPRequestHandler)
+    server.serve_forever()
+
+# Bot起動の前にサーバーを起動する
+threading.Thread(target=run_dummy_server, daemon=True).start()
+
+# --- ここから下のBotの処理はそのまま！ ---
 TOKEN = os.environ.get('DISCORD_TOKEN')
 
 # --- 設定 ---
