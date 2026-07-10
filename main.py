@@ -81,10 +81,10 @@ async def recruit(interaction: discord.Interaction, date: str, hour: str = "21",
         content=f"**募集主: {interaction.user.mention}**\n\n開始日時: <t:{int(target_dt.timestamp())}:F>\nマップ: **{map_name}**\n\n参加希望の方は返信してください！", 
         applied_tags=tags
     )
-            await interaction.followup.send(f"作成完了: {thread.thread.jump_url}", ephemeral=True)
-        except Exception as e:
-            await interaction.followup.send(f"エラー: {e}", ephemeral=True)
-    else:
-        await interaction.followup.send("⚠️ フォーラムチャンネルで実行してください。", ephemeral=True)
+    await interaction.followup.send(f"作成完了: {thread.thread.jump_url}", ephemeral=True)
+except Exception as e:
+    await interaction.followup.send(f"エラー: {e}", ephemeral=True)
+else:
+    await interaction.followup.send("⚠️ フォーラムチャンネルで実行してください。", ephemeral=True)
 
 bot.run(TOKEN)
