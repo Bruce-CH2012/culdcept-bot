@@ -74,15 +74,13 @@ async def recruit(interaction: discord.Interaction, date: str, hour: str = "21",
     dt = datetime.datetime.strptime(date, "%Y-%m-%d")
     target_dt = JST.localize(datetime.datetime(dt.year, dt.month, dt.day, int(hour), int(minute)))
     
-    channel = bot.get_channel(FORUM_CHANNEL_ID)
-    if isinstance(channel, discord.ForumChannel):
-        try:
-            tags = [channel.available_tags[0]] if channel.available_tags else []
-            thread = await channel.create_thread(
-                name=f"【募集】{target_dt.strftime('%m/%d %H:%M')}～ ＠{map_name}", 
-                content=f"開始日時: <t:{int(target_dt.timestamp())}:F>\nマップ: **{map_name}**", 
-                applied_tags=tags
-            )
+    # --- 修正箇所 ---
+    # スレッドの最初の投稿内容（content）を以下のように書き換えます
+    thread = await channel.create_thread(
+        name=f"【募集】{target_dt.strftime('%m/%d %H:%M')}～ ＠{map_name}", 
+        content=f"**募集主: {interaction.user.mention}**\n\n開始日時: <t:{int(target_dt.timestamp())}:F>\nマップ: **{map_name}**\n\n参加希望の方は返信してください！", 
+        applied_tags=tags
+    )
             await interaction.followup.send(f"作成完了: {thread.thread.jump_url}", ephemeral=True)
         except Exception as e:
             await interaction.followup.send(f"エラー: {e}", ephemeral=True)
