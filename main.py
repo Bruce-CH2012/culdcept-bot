@@ -64,8 +64,17 @@ DATE_CHOICES = generate_date_choices()
     app_commands.Choice(name="地の神殿", value="地の神殿"),
     app_commands.Choice(name="塔都テレイア", value="塔都テレイア"),
     app_commands.Choice(name="風の神殿", value="風の神殿"),
+    app_commands.Choice(name="炎都ビステア", value="炎都ビステア"),
+    app_commands.Choice(name="炎の神殿", value="炎の神殿"),
+    app_commands.Choice(name="古の大水門", value="古の大水門"),
+    app_commands.Choice(name="水の神殿跡", value="水の神殿跡"),
+    app_commands.Choice(name="闇神の神殿", value="闇神の神殿"),
+    app_commands.Choice(name="闇神ノンデス", value="闇神ノンデス"),
+    app_commands.Choice(name="天空庭園半壊", value="天空庭園半壊"),
     app_commands.Choice(name="ロータリー", value="ロータリー"),
     app_commands.Choice(name="ザエイト", value="ザエイト"),
+    app_commands.Choice(name="ダブルハート", value="ダブルハート"),
+    app_commands.Choice(name="モルフォ", value="モルフォ"),
     app_commands.Choice(name="どこでも", value="どこでも")
     ]
 )
