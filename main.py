@@ -35,23 +35,29 @@ class MyBot(commands.Bot):
 
 bot = MyBot()
 
-# --- 日付生成ロジック ---
-def generate_date_choices():
+# ① 日付の候補を動的に作る関数
+async def date_autocomplete(interaction: discord.Interaction, current: str) -> list[app_commands.Choice[str]]:
     choices = []
-    now = datetime.datetime.now(JST)
+    today = datetime.datetime.now(JST).date()
+    
+    # 今日から21日分（または必要な日数分）の選択肢を動的に生成
     for i in range(21):
-        target = now + datetime.timedelta(days=i)
-        label = f"{target.month}/{target.day}({['月','火','水','木','金','土','日'][target.weekday()]})"
-        if i == 0: label += " (今日)"
-        choices.append(app_commands.Choice(name=label, value=target.strftime("%Y-%m-%d")))
+        d = today + datetime.timedelta(days=i)
+        day_str = d.strftime("%Y-%m-%d")  # 内部の値 (例: "2026-10-11")
+        
+        # 表示名を作る (例: "10/11(日)(今日)")
+        name = f"{d.month}/{d.day}({'月火水木金土日'[d.weekday()]})"
+        if i == 0:
+            name += "(今日)"
+            
+        choices.append(app_commands.Choice(name=name, value=day_str))
+        
     return choices
-
-DATE_CHOICES = generate_date_choices()
 
 @bot.tree.command(name="募集", description="対戦募集を開始します")
 @app_commands.describe(date="日付", hour="時間", minute="分", map_name="マップ")
+@app_commands.autocomplete(date=date_autocomplete)  # ← ここで動的関数を指定！
 @app_commands.choices(
-    date=DATE_CHOICES,
     hour=[app_commands.Choice(name=f"{i:02d}時", value=f"{i:02d}") for i in range(24)],
     minute=[app_commands.Choice(name=f"{i:02d}分", value=f"{i:02d}") for i in [0, 15, 30, 45]],
     map_name=[
